@@ -1,0 +1,56 @@
+graph TD
+    subgraph "User Code"
+        A[Component Functions]
+        B[Signal/Computed]
+        C[html! Macro]
+    end
+
+    subgraph "Rue Framework - Reactivity"
+        D[Reactive System]
+        E[Effect Runner]
+    end
+
+    subgraph "Rue Framework - Virtual DOM"
+        F[VNode Tree New]
+        G[VNode Tree Old]
+        H[Patch Engine]
+        I[DOM Renderer/Mounter]
+    end
+
+    subgraph "WebAssembly"
+        J[web-sys DOM API]
+    end
+
+    subgraph "Browser"
+        K[Real DOM]
+        L[Event Loop]
+    end
+
+    A --> C
+    B --> D
+    C --> F
+    D --> E
+    E -->|Re-render component| F
+    
+    F -->|Compare| G
+    G -.->|Previous tree| H
+    F -->|New tree| H
+    
+    H -->|patch_node| I
+    I --> J
+    J --> K
+    
+    K --> L
+    L -->|User Events| A
+    
+    H -->|Updates stored DOM refs| G
+    
+    style A fill:#42b883,color:#fff
+    style B fill:#42b883,color:#fff
+    style C fill:#42b883,color:#fff
+    style D fill:#35495e,color:#fff
+    style E fill:#35495e,color:#fff
+    style F fill:#e65100,color:#fff
+    style G fill:#e65100,color:#fff
+    style H fill:#e65100,color:#fff
+    style I fill:#35495e,color:#fff

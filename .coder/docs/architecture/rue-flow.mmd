@@ -1,0 +1,48 @@
+graph TD
+    subgraph "User Code"
+        A[Component Functions]
+        B[Signal - Component State]
+        C[html! Macro]
+        D[Event Handler]
+    end
+
+    subgraph "Rue Framework - Reactivity"
+        E[Reactive System]
+        F[Effect Runner]
+    end
+
+    subgraph "Rue Framework - Virtual DOM"
+        G[VNode Tree New]
+        H[VNode Tree Old]
+        I[Patch Engine]
+        J[DOM Mounter]
+    end
+
+    subgraph "Browser DOM"
+        K[Real DOM]
+    end
+
+    D -->|"set() signal"| B
+    B -->|"trigger_effects"| E
+    D -->|"update_app()"| F
+    B -->|"get() on render"| A
+    A -->|"return VNode"| G
+    C -->|"compile-time"| A
+    
+    I -->|"minimal mutations"| K
+    G -->|"new tree"| I
+    H -->|"old tree"| I
+    G -->|"replaces"| H
+    J -->|"initial mount"| K
+
+    style A fill:#42b883,color:#fff
+    style B fill:#42b883,color:#fff
+    style C fill:#42b883,color:#fff
+    style D fill:#42b883,color:#fff
+    style E fill:#35495e,color:#fff
+    style F fill:#35495e,color:#fff
+    style G fill:#e65100,color:#fff
+    style H fill:#e65100,color:#fff
+    style I fill:#e65100,color:#fff
+    style J fill:#35495e,color:#fff
+    style K fill:#1565c0,color:#fff
