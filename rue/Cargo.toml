@@ -6,3 +6,21 @@ members = [
     "macros",
     "examples/landing",
 ]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.77"
+license = "MIT"
+authors = []
+repository = "https://github.com/pedrosoares/rue"
+homepage = "https://github.com/pedrosoares/rue"
+
+[workspace.dependencies]
+wasm-bindgen = "0.2.100"
+js-sys = "0.3"
+web-sys = "0.3"
+console_error_panic_hook = "0.1"
+proc-macro2 = "1"
+quote = "1"
+syn = { version = "2", features = ["full", "extra-traits"] }

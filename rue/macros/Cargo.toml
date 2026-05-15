@@ -1,12 +1,24 @@
 [package]
 name = "rue-macros"
-version = "0.1.0"
-edition = "2021"
+version.workspace = true
+description = "Procedural macros for Rue — a Vue 3-like reactive UI framework in Rust/WASM"
+keywords = ["vue", "reactive", "ui", "macro", "wasm"]
+categories = ["gui", "wasm", "web-programming", "rust-patterns"]
+license.workspace = true
+readme = "../../README.md"
+repository.workspace = true
+homepage.workspace = true
+documentation = "https://docs.rs/rue-macros"
+edition.workspace = true
+rust-version.workspace = true
 
 [lib]
 proc-macro = true
 
 [dependencies]
-proc-macro2 = "1"
-quote = "1"
-syn = { version = "2", features = ["full", "extra-traits"] }
+proc-macro2 = { workspace = true }
+quote = { workspace = true }
+syn = { workspace = true }
+
+[package.metadata.docs.rs]
+all-features = true

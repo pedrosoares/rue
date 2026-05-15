@@ -1,15 +1,25 @@
 [package]
 name = "rue-core"
-version = "0.1.0"
-edition = "2021"
+version.workspace = true
+description = "A Vue 3-like reactive UI framework for building web applications in Rust/WASM"
+keywords = ["vue", "reactive", "ui", "wasm", "webassembly"]
+categories = ["gui", "wasm", "web-programming"]
+license.workspace = true
+readme = "../../README.md"
+repository.workspace = true
+homepage.workspace = true
+documentation = "https://docs.rs/rue-core"
+edition.workspace = true
+rust-version.workspace = true
+exclude = ["pkg/"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-wasm-bindgen = "0.2.100"
-js-sys = "0.3"
-web-sys = { version = "0.3", features = [
+wasm-bindgen = { workspace = true }
+js-sys = { workspace = true }
+web-sys = { workspace = true, features = [
     "console",
     "Document",
     "Element",
@@ -30,7 +40,11 @@ web-sys = { version = "0.3", features = [
     "HtmlCollection",
     "Comment",
 ] }
-console_error_panic_hook = "0.1"
+console_error_panic_hook = { workspace = true }
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3"
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg=web_sys_unstable_apis"]

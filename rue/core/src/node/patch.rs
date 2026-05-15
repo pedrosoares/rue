@@ -7,6 +7,9 @@ use super::mount::mount_to_dom;
 use super::children::patch_children;
 use super::{EventHandler, VElement, VNode};
 
+/// SVG namespace URI
+const SVG_NS: &str = "http://www.w3.org/2000/svg";
+
 // ---------------------------------------------------------------------------
 // Top-level patch dispatcher
 // ---------------------------------------------------------------------------
@@ -143,15 +146,13 @@ fn patch_element(
         Some(ref node) => {
             // Safety: we know it's an Element because we created it that way
             node.clone().dyn_into::<web_sys::Element>().unwrap_or_else(|_| {
-                // Fallback: create a new element
-                let doc = web_sys::window().unwrap().document().unwrap();
-                doc.create_element(&new.tag).unwrap()
+                // Fallback: create a new element with correct namespace
+                create_element_ns(&new.tag)
             })
         }
         None => {
-            // No existing element — create a new one
-            let doc = web_sys::window().unwrap().document().unwrap();
-            doc.create_element(&new.tag).unwrap()
+            // No existing element — create a new one with correct namespace
+            create_element_ns(&new.tag)
         }
     };
 
@@ -169,6 +170,18 @@ fn patch_element(
     patch_children(&old.children, &new.children, &node);
 
     node
+}
+
+/// Create a DOM element with the correct namespace.
+/// Uses SVG namespace for SVG elements, HTML namespace otherwise.
+fn create_element_ns(tag: &str) -> web_sys::Element {
+    let doc = web_sys::window().unwrap().document().unwrap();
+    if tag == "svg" {
+        doc.create_element_ns(Some(SVG_NS), tag)
+    } else {
+        doc.create_element(tag)
+    }
+    .unwrap()
 }
 
 // ---------------------------------------------------------------------------
